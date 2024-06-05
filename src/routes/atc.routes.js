@@ -1,12 +1,12 @@
 module.exports = app => {
-  const CricketController = require("../controllers/cricket.controller.js");
+  const ATCController = require("../controllers/atc.controller.js");
   const { check, validationResult } = require("express-validator");
 
   const router = require("express").Router();
 
   // Create a new Cricket game
   router.post("/", [
-    check('numberOfPlayers', 'Number of Players must be between 1 and 4').isIn([1, 2, 3, 4])],
+    check('timeMs', 'Time must not be 0').notEmpty().isInt({ min: 1 })],
     (req, res, next) => {
       const error = validationResult(req).formatWith(({ msg }) => msg);
 
@@ -18,20 +18,14 @@ module.exports = app => {
         next();
       }
     },
-    CricketController.create
+    ATCController.create
   );
 
   // Retrieve all Cricket games
-  router.get("/", CricketController.findAll);
-
-  // Retrieve a single Cricket game with id
-  router.get("/:id", CricketController.findOne);
-
-  // Update a Cricket game with id
-  router.put("/:id", CricketController.update);
+  router.get("/", ATCController.findByQuery);
 
   // Delete a Cricket game with id
-  router.delete("/:id", CricketController.delete);
+  router.delete("/:id", ATCController.delete);
 
-  app.use("/api/games/cricket", router);
+  app.use("/api/training/atc", router);
 };
