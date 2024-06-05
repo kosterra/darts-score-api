@@ -2,10 +2,13 @@ module.exports = mongoose => {
 
   var schema = mongoose.Schema(
     {
-      firstname: String,
-      lastname: String,
-      nickname: String,
-      profileImg: String
+      timeMs: Number,
+      hours: Number,
+      minutes: Number,
+      seconds: Number,
+      milliseconds: Number,
+      mode: String,
+      player: mongoose.Schema.Types.Mixed
     },
     { timestamps: true }
   );
@@ -16,6 +19,6 @@ module.exports = mongoose => {
     return object;
   });
 
-  const Player = mongoose.model("player", schema);
-  return Player;
+  const ATC = mongoose.model("atc", schema);
+  return ATC;
 };
